@@ -1,0 +1,107 @@
+<div class="wheel-page">
+
+  <!-- Player selector -->
+  <div class="player-selector">
+    <span class="label">Who's spinning?</span>
+    <div class="player-btns">
+      @for (player of players(); track player.id) {
+        <button
+          class="player-btn"
+          [class.active]="selectedPlayerId() === player.id"
+          [style.--player-color]="player.color"
+          (click)="selectedPlayerId.set(player.id)">
+          {{ player.name }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Wheel -->
+  <div class="wheel-container">
+    <div class="pointer">▼</div>
+
+    @if (unassigned().length > 0) {
+      <svg
+        class="wheel-svg"
+        [class.spinning]="spinning()"
+        [style.transform]="'rotate(' + rotation() + 'deg)'"
+        [style.transition]="spinning() ? 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none'"
+        viewBox="0 0 400 400"
+        width="400" height="400">
+
+        @for (seg of segments(); track seg.chore.id) {
+          <path
+            [attr.d]="seg.path"
+            [attr.fill]="seg.color"
+            stroke="#1a1a2e"
+            stroke-width="2"/>
+          <text
+            [attr.x]="seg.labelX"
+            [attr.y]="seg.labelY"
+            [attr.transform]="'rotate(' + seg.labelAngle + ',' + seg.labelX + ',' + seg.labelY + ')'"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            class="seg-label">
+            {{ seg.chore.emoji }} {{ seg.chore.name }}
+          </text>
+        }
+
+        <!-- Center cap -->
+        <circle cx="200" cy="200" r="30" fill="#1a1a2e" stroke="#FFE66D" stroke-width="3"/>
+        <text x="200" y="200" text-anchor="middle" dominant-baseline="middle" font-size="20">🎡</text>
+      </svg>
+    } @else {
+      <div class="wheel-empty">
+        <span>🎉</span>
+        <p>All chores assigned!</p>
+      </div>
+    }
+  </div>
+
+  <!-- Spin button -->
+  <button class="spin-btn" [disabled]="!canSpin()" (click)="spin()">
+    {{ spinning() ? 'Spinning…' : 'SPIN!' }}
+  </button>
+
+  <!-- Result card -->
+  @if (resultChore() && resultPlayer()) {
+    <div class="result-card" [style.--player-color]="resultPlayer()!.color">
+      <div class="result-emoji">{{ resultChore()!.emoji }}</div>
+      <div class="result-chore">{{ resultChore()!.name }}</div>
+      <div class="result-detail">{{ resultChore()!.detail }}</div>
+      <div class="result-player">→ {{ resultPlayer()!.name }}</div>
+    </div>
+  }
+
+  <!-- Reset -->
+  <button class="reset-btn" (click)="reset()">Reset All Assignments</button>
+
+  <!-- Assignment lists per player -->
+  @if (assignments().length > 0) {
+    <div class="assignments-section">
+      <h2>Assignments</h2>
+      <div class="assignment-grid">
+        @for (player of players(); track player.id) {
+          @let items = playerAssignments(player.id);
+          @if (items.length > 0) {
+            <div class="player-assignments" [style.--player-color]="player.color">
+              <h3>{{ player.name }}</h3>
+              <ul>
+                @for (item of items; track item.chore.id) {
+                  <li [class.done]="item.assignment.done">
+                    <label>
+                      <input type="checkbox" [checked]="item.assignment.done"
+                        (change)="toggleDone(item.chore.id)"/>
+                      <span class="chore-emoji">{{ item.chore.emoji }}</span>
+                      <span class="chore-name">{{ item.chore.name }}</span>
+                    </label>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+</div>

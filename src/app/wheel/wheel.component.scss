@@ -1,0 +1,226 @@
+.wheel-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+}
+
+.player-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+
+  .label {
+    color: #aaa;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}
+
+.player-btns {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.player-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  border: 2px solid var(--player-color, #888);
+  background: transparent;
+  color: var(--player-color, #fff);
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+
+  &.active {
+    background: var(--player-color, #888);
+    color: #1a1a2e;
+    font-weight: 700;
+  }
+
+  &:hover:not(.active) {
+    background: color-mix(in srgb, var(--player-color) 20%, transparent);
+  }
+}
+
+.wheel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pointer {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: #FFE66D;
+  filter: drop-shadow(0 0 6px #FFE66D);
+  z-index: 10;
+  line-height: 1;
+}
+
+.wheel-svg {
+  display: block;
+  filter: drop-shadow(0 4px 24px rgba(0,0,0,0.5));
+  border-radius: 50%;
+}
+
+.seg-label {
+  font-size: 11px;
+  fill: #1a1a2e;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.wheel-empty {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  border: 3px dashed #4ECDC4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #4ECDC4;
+
+  span { font-size: 3rem; }
+  p { font-size: 1.2rem; margin: 0; }
+}
+
+.spin-btn {
+  padding: 0.85rem 3rem;
+  font-size: 1.4rem;
+  font-family: inherit;
+  font-weight: 700;
+  background: #FFE66D;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 3rem;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: 0 4px 16px rgba(255,230,109,0.4);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,230,109,0.5);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.result-card {
+  background: color-mix(in srgb, var(--player-color) 15%, #1a1a2e);
+  border: 2px solid var(--player-color, #4ECDC4);
+  border-radius: 1rem;
+  padding: 1.5rem 2.5rem;
+  text-align: center;
+  animation: pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  .result-emoji { font-size: 3rem; }
+  .result-chore { font-size: 1.6rem; font-weight: 700; color: #fff; }
+  .result-detail { font-size: 0.95rem; color: #aaa; margin-top: 0.25rem; }
+  .result-player {
+    margin-top: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--player-color, #4ECDC4);
+  }
+}
+
+@keyframes pop-in {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.reset-btn {
+  background: transparent;
+  border: 1px solid #FF6B6B;
+  color: #FF6B6B;
+  padding: 0.4rem 1.2rem;
+  border-radius: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255,107,107,0.15);
+  }
+}
+
+.assignments-section {
+  width: 100%;
+  max-width: 800px;
+
+  h2 {
+    text-align: center;
+    color: #4ECDC4;
+    margin-bottom: 1rem;
+  }
+}
+
+.assignment-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.player-assignments {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--player-color, #888);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  min-width: 180px;
+
+  h3 {
+    color: var(--player-color, #fff);
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  li {
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      color: #ddd;
+      font-size: 0.9rem;
+    }
+
+    &.done label {
+      text-decoration: line-through;
+      color: #666;
+    }
+  }
+
+  .chore-emoji { font-size: 1rem; }
+}

@@ -1,0 +1,43 @@
+<div class="players-page">
+  <h1>Players</h1>
+
+  <ul class="player-list">
+    @for (player of players(); track player.id) {
+      <li class="player-item">
+        @if (editingId() === player.id) {
+          <div class="edit-row">
+            <input class="color-swatch-input" type="color" [value]="editColor()"
+              (input)="editColor.set($any($event.target).value)"/>
+            <input class="name-input" type="text" [value]="editName()"
+              (input)="editName.set($any($event.target).value)"
+              (keyup.enter)="saveEdit(player.id)"
+              (keyup.escape)="cancelEdit()"/>
+            <button class="btn-save" (click)="saveEdit(player.id)">Save</button>
+            <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+          </div>
+        } @else {
+          <div class="display-row">
+            <span class="color-dot" [style.background]="player.color"></span>
+            <span class="player-name">{{ player.name }}</span>
+            <button class="btn-edit" (click)="startEdit(player)">Edit</button>
+            <button class="btn-delete" (click)="deletePlayer(player)">Delete</button>
+          </div>
+        }
+      </li>
+    } @empty {
+      <li class="empty">No players yet.</li>
+    }
+  </ul>
+
+  <div class="add-form">
+    <h2>Add Player</h2>
+    <div class="form-row">
+      <input class="color-swatch-input" type="color" [value]="newColor()"
+        (input)="newColor.set($any($event.target).value)"/>
+      <input class="name-input" type="text" placeholder="Player name" [value]="newName()"
+        (input)="newName.set($any($event.target).value)"
+        (keyup.enter)="addPlayer()"/>
+      <button class="btn-add" (click)="addPlayer()" [disabled]="!newName().trim()">Add</button>
+    </div>
+  </div>
+</div>
