@@ -29,6 +29,10 @@
     }
   </ul>
 
+  @if (players().length > 0) {
+    <a class="btn-spin" routerLink="/wheel">🎡 Click here to spin the wheel!</a>
+  }
+
   <button class="btn-save-defaults" (click)="saveDefaults()">Save as Default</button>
 
   <div class="add-form">

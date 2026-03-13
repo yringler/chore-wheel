@@ -1,11 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { StateService, Player } from '../services/state.service';
 
 @Component({
   selector: 'app-players',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './players.component.html',
   styleUrl: './players.component.scss',
 })
