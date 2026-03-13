@@ -124,6 +124,7 @@ export class WheelComponent {
       this.svc.addAssignment(won.id, playerId);
       this.resultChore.set(won);
       this.resultPlayer.set(this.players().find(p => p.id === playerId) ?? null);
+      this.selectedPlayerId.set('');
       this.spinning.set(false);
       // Reset rotation instantly after spin so next spin can animate fresh
       // (reset happens after a small delay so CSS transition doesn't fight)
