@@ -54,4 +54,8 @@ export class PlayersComponent {
     }
     this.svc.deletePlayer(player.id);
   }
+
+  saveDefaults() {
+    this.svc.saveDefaults();
+  }
 }

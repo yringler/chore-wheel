@@ -95,6 +95,7 @@
                       <span class="chore-emoji">{{ item.chore.emoji }}</span>
                       <span class="chore-name">{{ item.chore.name }}</span>
                     </label>
+                    <button class="btn-unassign" (click)="unassign(item.chore.id)" title="Unassign">✕</button>
                   </li>
                 }
               </ul>

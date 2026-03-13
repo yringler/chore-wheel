@@ -26,13 +26,10 @@ export interface AppState {
 }
 
 const STORAGE_KEY = 'chore-wheel-state';
+const DEFAULTS_KEY = 'chore-wheel-defaults';
 
 const DEFAULT_STATE: AppState = {
-  players: [
-    { id: crypto.randomUUID(), name: 'Meir', color: '#FF6B6B' },
-    { id: crypto.randomUUID(), name: 'Mendel', color: '#4ECDC4' },
-    { id: crypto.randomUUID(), name: 'Rivka', color: '#FFE66D' },
-  ],
+  players: [],
   chores: [
     { id: crypto.randomUUID(), name: 'Clean Up Games', emoji: '🎲', detail: 'put all games away' },
     { id: crypto.randomUUID(), name: 'Table', emoji: '🍽️', detail: 'clean off the table' },
@@ -72,12 +69,22 @@ export class StateService {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) return JSON.parse(raw) as AppState;
+      const defaults = localStorage.getItem(DEFAULTS_KEY);
+      if (defaults) {
+        const { players, chores } = JSON.parse(defaults) as Pick<AppState, 'players' | 'chores'>;
+        return { players, chores, assignments: [] };
+      }
     } catch {}
     return DEFAULT_STATE;
   }
 
   private save(state: AppState) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  saveDefaults() {
+    const { players, chores } = this.state();
+    localStorage.setItem(DEFAULTS_KEY, JSON.stringify({ players, chores }));
   }
 
   private update(fn: (s: AppState) => AppState) {
@@ -137,6 +144,13 @@ export class StateService {
     this.update(s => ({
       ...s,
       assignments: [...s.assignments, { choreId, playerId, done: false }],
+    }));
+  }
+
+  unassignChore(choreId: string) {
+    this.update(s => ({
+      ...s,
+      assignments: s.assignments.filter(a => a.choreId !== choreId),
     }));
   }
 
