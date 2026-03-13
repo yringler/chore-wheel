@@ -1,0 +1,56 @@
+<div class="chores-page">
+  <h1>Chores</h1>
+
+  <ul class="chore-list">
+    @for (chore of chores(); track chore.id) {
+      <li class="chore-item">
+        @if (editingId() === chore.id) {
+          <div class="edit-row">
+            <input class="emoji-input" type="text" maxlength="4" [value]="editEmoji()"
+              (input)="editEmoji.set($any($event.target).value)"
+              placeholder="🎲"/>
+            <input class="name-input" type="text" [value]="editName()"
+              (input)="editName.set($any($event.target).value)"
+              placeholder="Chore name"
+              (keyup.enter)="saveEdit(chore.id)"
+              (keyup.escape)="cancelEdit()"/>
+            <input class="detail-input" type="text" [value]="editDetail()"
+              (input)="editDetail.set($any($event.target).value)"
+              placeholder="Details"/>
+            <button class="btn-save" (click)="saveEdit(chore.id)">Save</button>
+            <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+          </div>
+        } @else {
+          <div class="display-row">
+            <span class="chore-emoji">{{ chore.emoji }}</span>
+            <div class="chore-info">
+              <span class="chore-name">{{ chore.name }}</span>
+              @if (chore.detail) {
+                <span class="chore-detail">{{ chore.detail }}</span>
+              }
+            </div>
+            <button class="btn-edit" (click)="startEdit(chore)">Edit</button>
+            <button class="btn-delete" (click)="deleteChore(chore)">Delete</button>
+          </div>
+        }
+      </li>
+    } @empty {
+      <li class="empty">No chores yet.</li>
+    }
+  </ul>
+
+  <div class="add-form">
+    <h2>Add Chore</h2>
+    <div class="form-row">
+      <input class="emoji-input" type="text" maxlength="4" placeholder="🎲" [value]="newEmoji()"
+        (input)="newEmoji.set($any($event.target).value)"/>
+      <input class="name-input" type="text" placeholder="Chore name" [value]="newName()"
+        (input)="newName.set($any($event.target).value)"
+        (keyup.enter)="addChore()"/>
+      <input class="detail-input" type="text" placeholder="Details" [value]="newDetail()"
+        (input)="newDetail.set($any($event.target).value)"
+        (keyup.enter)="addChore()"/>
+      <button class="btn-add" (click)="addChore()" [disabled]="!newName().trim()">Add</button>
+    </div>
+  </div>
+</div>

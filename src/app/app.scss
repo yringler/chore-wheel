@@ -1,0 +1,48 @@
+.app-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+
+  .brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #FFE66D;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+
+    a {
+      color: #aaa;
+      text-decoration: none;
+      padding: 0.4rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      transition: background 0.15s, color 0.15s;
+
+      &:hover {
+        color: #fff;
+        background: rgba(255,255,255,0.07);
+      }
+
+      &.active {
+        color: #4ECDC4;
+        background: rgba(78, 205, 196, 0.12);
+      }
+    }
+  }
+}
+
+main {
+  min-height: calc(100vh - 57px);
+}
