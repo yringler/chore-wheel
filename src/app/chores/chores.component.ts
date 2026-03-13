@@ -58,4 +58,8 @@ export class ChoresComponent {
     }
     this.svc.deleteChore(chore.id);
   }
+
+  saveDefaults() {
+    this.svc.saveDefaults();
+  }
 }

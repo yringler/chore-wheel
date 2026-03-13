@@ -135,6 +135,10 @@ export class WheelComponent {
     this.svc.toggleDone(choreId);
   }
 
+  unassign(choreId: string) {
+    this.svc.unassignChore(choreId);
+  }
+
   reset() {
     this.svc.resetAssignments();
     this.resultChore.set(null);

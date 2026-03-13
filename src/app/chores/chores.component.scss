@@ -139,3 +139,11 @@ button {
 .btn-cancel { background: #444; color: #ddd; }
 .btn-edit   { background: #2a2a4e; color: #4ECDC4; border: 1px solid #4ECDC4; }
 .btn-delete { background: rgba(255,107,107,0.15); color: #FF6B6B; border: 1px solid #FF6B6B; }
+.btn-save-defaults {
+  display: block;
+  margin: 0 0 1.5rem;
+  background: rgba(255,230,109,0.12);
+  color: #FFE66D;
+  border: 1px solid #FFE66D;
+  font-weight: 600;
+}
